@@ -1,5 +1,5 @@
 {
-    "name": "vinicius/silex-knp-paginator",
+    "name": "vinyvicente/silex-knp-paginator",
     "description": "Paginator Provider to Silex 2.0",
     "type": "library",
     "require": {
