@@ -35,7 +35,7 @@ class PaginatorProvider implements ServiceProviderInterface, BootableProviderInt
             $app->register(new TranslationServiceProvider());
         }
 
-        $app['twig'] = $app->extend('twig', function(\Twig_Environment $twig) use ($app) {
+        $app['twig'] = $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
             $processor = new Processor($app['url_generator'], $app['translator']);
 
             $twig->addExtension(new PaginationExtension($processor));
@@ -43,9 +43,9 @@ class PaginatorProvider implements ServiceProviderInterface, BootableProviderInt
             return $twig;
         });
 
-        $app['knp_paginator.path']          = __DIR__ . '/../../vendor/knplabs/knp-paginator-bundle';
-        $app['knp_paginator.limits']        = [2, 5, 10, 25, 50, 100, 200, 500];
-        $app['knp_paginator.options']       = [];
+        $app['knp_paginator.path'] = realpath(__DIR__ . '/../../../../../') . '/vendor/knplabs/knp-paginator-bundle';
+        $app['knp_paginator.limits'] = [2, 5, 10, 25, 50, 100, 200, 500];
+        $app['knp_paginator.options'] = [];
         $app['knp_paginator.options_fixer'] = function () use ($app) {
             $app['knp_paginator.options'] = array_replace_recursive(
                 [
@@ -86,13 +86,13 @@ class PaginatorProvider implements ServiceProviderInterface, BootableProviderInt
             $paginator = new Paginator($app['dispatcher']);
 
             $options = [
-                    'pageParameterName' => $app['knp_paginator.options']['default_options']['page_name'],
-                    'sortFieldParameterName' => $app['knp_paginator.options']['default_options']['sort_field_name'],
-                    'sortDirectionParameterName' => $app['knp_paginator.options']['default_options']['sort_direction_name'],
-                    'filterFieldParameterName' => $app['knp_paginator.options']['default_options']['filter_field_name'],
-                    'filterValueParameterName' => $app['knp_paginator.options']['default_options']['filter_value_name'],
-                    'distinct' => $app['knp_paginator.options']['default_options']['distinct'],
-                ];
+                'pageParameterName' => $app['knp_paginator.options']['default_options']['page_name'],
+                'sortFieldParameterName' => $app['knp_paginator.options']['default_options']['sort_field_name'],
+                'sortDirectionParameterName' => $app['knp_paginator.options']['default_options']['sort_direction_name'],
+                'filterFieldParameterName' => $app['knp_paginator.options']['default_options']['filter_field_name'],
+                'filterValueParameterName' => $app['knp_paginator.options']['default_options']['filter_value_name'],
+                'distinct' => $app['knp_paginator.options']['default_options']['distinct'],
+            ];
 
             $paginator->setDefaultPaginatorOptions($options);
 
