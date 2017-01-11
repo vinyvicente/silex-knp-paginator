@@ -8,10 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 $app = new Application();
 $app['debug'] = true;
-$app->register(new PaginatorProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/views',
 ));
+
+// needs be after twig register :)
+$app->register(new PaginatorProvider());
 
 $app['knp_paginator.options'] = array(
     'default_options' => array(

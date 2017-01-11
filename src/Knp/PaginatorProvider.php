@@ -16,7 +16,6 @@ use Silex\Application;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
 
 /**
  * Class PaginatorProvider
@@ -36,11 +35,11 @@ class PaginatorProvider implements ServiceProviderInterface, BootableProviderInt
             $app->register(new TranslationServiceProvider());
         }
 
-        $app->extend('twig', function($twig, $app) {
+        $app['twig'] = $app->extend('twig', function(\Twig_Environment $twig) use ($app) {
             $processor = new Processor($app['url_generator'], $app['translator']);
 
             $twig->addExtension(new PaginationExtension($processor));
-            $twig->addExtension(new RoutingExtension($app['url_generator']));
+
             return $twig;
         });
 
@@ -70,11 +69,15 @@ class PaginatorProvider implements ServiceProviderInterface, BootableProviderInt
         };
 
         $app['knp_paginator'] = function () use ($app) {
-            $views = rtrim($app['knp_paginator.path'], '/').'/Resources/views/Pagination';
+            $views = rtrim($app['knp_paginator.path'], '/') . '/Resources/views/Pagination';
 
             /** @var \Twig_Loader_Chain $loader */
             $loader = $app['twig.loader'];
-            $loader->addLoader(new \Twig_Loader_Filesystem($views, 'knp_paginator_bundle'));
+
+            $fileSystem = new \Twig_Loader_Filesystem();
+            $fileSystem->setPaths($views, 'knp_paginator_bundle');
+
+            $loader->addLoader($fileSystem);
 
             // Fix options
             $app['knp_paginator.options_fixer'];
