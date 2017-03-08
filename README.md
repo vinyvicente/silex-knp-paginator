@@ -8,12 +8,16 @@ Plugin KNP Paginator to Silex 2.0
 [![Monthly Downloads](https://poser.pugx.org/vinyvicente/silex-knp-paginator/d/monthly)](https://packagist.org/packages/vinyvicente/silex-knp-paginator)
 [![composer.lock](https://poser.pugx.org/vinyvicente/silex-knp-paginator/composerlock)](https://packagist.org/packages/vinyvicente/silex-knp-paginator)
 
+## Dependencies
+
+* PHP 5.6+
+* Silex 2.0+
+* Twig 2.0+
+
 ## How to Use
 
 
 ```php
-<?php
-
 require 'vendor/autoload.php';
 
 use Silex\Application;
