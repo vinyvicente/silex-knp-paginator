@@ -10,12 +10,17 @@ Plugin KNP Paginator to Silex 2.0
 
 ## Dependencies
 
-* PHP 5.6+
+* PHP 7+
 * Silex 2.0+
 * Twig 2.0+
 
 ## How to Use
 
+#### Based on Knp Pagination Bundle
+
+See more: [Docs](https://github.com/KnpLabs/KnpPaginatorBundle)
+
+### Integrating with Silex below
 
 ```php
 require 'vendor/autoload.php';
@@ -76,3 +81,7 @@ $app->get('/', function(Request $request) use ($app) {
 
 $app->run();
 ```
+
+### Twig
+
+[Read the Docs](https://github.com/KnpLabs/KnpPaginatorBundle#view)
