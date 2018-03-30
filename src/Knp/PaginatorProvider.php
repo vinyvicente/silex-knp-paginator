@@ -11,17 +11,18 @@ use Knp\Component\Pager\Event\Subscriber\Sortable\SortableSubscriber;
 use Knp\Component\Pager\Paginator;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Silex\Api\BootableProviderInterface;
+use Silex\Api\EventListenerProviderInterface;
 use Silex\Application;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Class PaginatorProvider
  * @package Silex\Knp
  */
-class PaginatorProvider implements ServiceProviderInterface, BootableProviderInterface
+class PaginatorProvider implements ServiceProviderInterface, EventListenerProviderInterface
 {
     public function register(Container $app)
     {
@@ -125,16 +126,13 @@ class PaginatorProvider implements ServiceProviderInterface, BootableProviderInt
         };
     }
 
-    /**
-     * @param Application $app
-     */
-    public function boot(Application $app)
+    public function subscribe(Container $app, EventDispatcherInterface $dispatcher)
     {
-        $app['dispatcher']->addSubscriber($app['knp_paginator.pagination_subscriber']);
-        $app['dispatcher']->addSubscriber($app['knp_paginator.sortable_subscriber']);
-        $app['dispatcher']->addSubscriber($app['knp_paginator.filtration_subscriber']);
-        $app['dispatcher']->addSubscriber($app['knp_paginator.sliding_pagination_subscriber']);
-        $app['dispatcher']->addListener(
+        $dispatcher->addSubscriber($app['knp_paginator.pagination_subscriber']);
+        $dispatcher->addSubscriber($app['knp_paginator.sortable_subscriber']);
+        $dispatcher->addSubscriber($app['knp_paginator.filtration_subscriber']);
+        $dispatcher->addSubscriber($app['knp_paginator.sliding_pagination_subscriber']);
+        $dispatcher->addListener(
             KernelEvents::REQUEST,
             [$app['knp_paginator.sliding_pagination_subscriber'], 'onKernelRequest']
         );
