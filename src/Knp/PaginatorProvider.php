@@ -38,7 +38,7 @@ class PaginatorProvider implements ServiceProviderInterface, EventListenerProvid
             $app->register(new TranslationServiceProvider());
         }
 
-        $app['twig'] = $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+        $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
             $processor = new Processor($app['url_generator'], $app['translator']);
 
             $twig->addExtension(new PaginationExtension($processor));
