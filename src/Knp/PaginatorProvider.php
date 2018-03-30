@@ -26,7 +26,9 @@ class PaginatorProvider implements ServiceProviderInterface, EventListenerProvid
 {
     public function register(Container $app)
     {
-        $app['locale'] = 'en';
+        if (!isset($app['locale'])) {
+            $app['locale'] = 'en';
+        }
 
         if (!isset($app['twig'])) {
             $app->register(new TwigServiceProvider());
