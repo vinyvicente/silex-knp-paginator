@@ -3,7 +3,7 @@
     "description": "Paginator Provider to Silex 2.0",
     "type": "library",
     "require": {
-        "php": ">=7.0",
+        "php": "5.6 || >=7.0",
         "twig/twig": "^2.0",
         "silex/silex": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.5",
